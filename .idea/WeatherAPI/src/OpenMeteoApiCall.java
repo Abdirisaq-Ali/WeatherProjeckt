@@ -3,14 +3,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class OpenWeatherMapApiCall {
+public class OpenMeteoApiCall {
 
-    private static final String API_KEY = "YOUR_API_KEY";
-    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather";
+    private static final String BASE_URL = "https://api.open-meteo.com/v1/forecast";
 
     public static void main(String[] args) {
-        String cityName = "London";
-        String urlString = BASE_URL + "?q=" + cityName + "&appid=" + API_KEY;
+        double latitude = 51.5074;
+        double longitude = -0.1278;
+        String parameters = "hourly=temperature_2m,apparent_temperature";
+        String urlString = BASE_URL + "?latitude=" + latitude + "&longitude=" + longitude + "&" + parameters;
 
         try {
             URL url = new URL(urlString);
@@ -34,6 +35,8 @@ public class OpenWeatherMapApiCall {
                 connection.disconnect();
 
                 System.out.println("Weather data: " + content.toString());
+
+
             } else {
                 System.out.println("Error: API call unsuccessful. HTTP status code: " + status);
             }
